@@ -1,6 +1,8 @@
 # base
 Projeto django basico com docker.
 
+# Requisitos 
+    docker instalado no windows ou linux
 
 # Comando docker para construir a imagem sem pegar do cache
     sudo docker compose build --no-cache
