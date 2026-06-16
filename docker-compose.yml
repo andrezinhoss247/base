@@ -1,8 +1,13 @@
-
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    # O truque está aqui: O container liga, monta o volume vazio, e o script checa: 
+    # "Tem manage.py?" Não. "Então cria o projeto agora!". 
+    # Como o volume já está montado, os arquivos nascem dentro do container e aparecem no seu Windows na mesma hora.
+    command: >
+      sh -c "if [ ! -f manage.py ]; then django-admin startproject core . ; fi && 
+             python manage.py migrate && 
+             python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:

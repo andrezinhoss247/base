@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN django-admin startproject core .
+
 # Copia o restante do código do projeto para o container
 COPY . /app/
 
