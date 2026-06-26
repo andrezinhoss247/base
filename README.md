@@ -1,20 +1,35 @@
 # base
-Projeto django basico com docker.
+Projeto django basico com docker docker-compose e github.
 
 # Requisitos 
-    docker instalado no windows ou linux
+    
 
+# Baixar projeto 
+    git clone https://github.com/andrezinhoss247/base.git
+
+
+# Criando uma imagem
 # Comando docker para construir a imagem sem pegar do cache
     sudo docker compose build --no-cache
+
+# Cria primeiro projeto e remove container, esse comando sever so para criar os arquivos do projeto inical 
+    sudo docker compose run --rm web django-admin startproject core .
+
+# Subindo container
+    sudo docker compose up -d
+
+# Criar um novo App :    
+    sudo docker compose run --rm web python manage.py startapp nome_do_app
+
+
+# Outros comandos utilizados
+
 
 # Comando para construir a imagem e subir container
     docker compose up -d --build
 
 # Derrubando o constainer e removendo volumes orfãos
     sudo docker compose down -v
-
-# Subindo container
-    sudo docker compose up -d
 
 # Verificando logs
     sudo docker compose logs -f
@@ -32,8 +47,5 @@ Projeto django basico com docker.
     sudo docker compose run --rm web python manage.py createsuperuser
 
 
-# Criar um novo App (Caso precise de outro além de equipamentos/usuario):    
-    sudo docker compose run --rm web python manage.py startapp nome_do_app
 
-# Criando projeto
-    sudo docker compose run --rm web django-admin startproject meu_projeto .
+

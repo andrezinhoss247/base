@@ -1,9 +1,6 @@
 # Framework Principal
 django>=4.2,<5.1
 
-# Comunicação com Banco de Dados (opcional, essencial se for usar PostgreSQL no Docker)
-psycopg2-binary>=2.9.9
-
 # Gerenciamento de variáveis de ambiente (segurança para senhas e chaves)
 django-environ>=0.11.2
 
