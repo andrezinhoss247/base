@@ -1,14 +1,45 @@
 services:
   web:
-    build: .
+    build: .                      # Constrói a imagem usando o Dockerfile da pasta atual.
 
     ports:
-      - "8000:8000"
+      - "8000:8000"               # Porta do computador : porta do container.
 
     volumes:
-      - .:/app
-      
-    command: python manage.py runserver 0.0.0.0:8000
+      - .:/app                    # Sincroniza a pasta do projeto com o container.
+
+    command: python manage.py runserver 0.0.0.0:8000  # Inicia o servidor Django.
 
     environment:
-      - DEBUG=1
+      - DEBUG=1                   # Ativa o modo de desenvolvimento.
+      - DB_NAME=sistemadeagendamento  # Nome do banco de dados que o Django irá acessar.
+      - DB_USER=postgres          # Usuário do banco de dados.
+      - DB_PASSWORD=123456        # Senha do usuário do banco.
+      - DB_HOST=db                # Nome do serviço do PostgreSQL na rede do Docker.
+      - DB_PORT=5432              # Porta utilizada pelo PostgreSQL.
+
+    depends_on:
+      - db                        # Inicia o container do banco antes do Django.
+
+  db:
+    image: postgres:17            # Utiliza a imagem oficial do PostgreSQL versão 17.
+
+    container_name: postgres_agendamento  # Nome do container.
+
+    restart: always               # Reinicia automaticamente caso pare.
+
+    environment:
+      POSTGRES_DB: sistemadeagendamento   # Cria o banco de dados com esse nome.
+      POSTGRES_USER: postgres             # Cria o usuário administrador.
+      POSTGRES_PASSWORD: 123456           # Define a senha do usuário.
+
+    ports:
+      - "5432:5432"               # Expõe a porta do PostgreSQL para o computador.
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Salva os dados do banco em um volume permanente.
+
+volumes:
+  postgres_data:
+    # Volume Docker onde os dados do PostgreSQL ficam armazenados.
